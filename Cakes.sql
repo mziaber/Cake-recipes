@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: db
--- Czas generowania: 08 Lut 2023, 13:12
+-- Czas generowania: 09 Lut 2023, 20:14
 -- Wersja serwera: 8.0.32
 -- Wersja PHP: 8.0.27
 
@@ -20,6 +20,28 @@ SET time_zone = "+00:00";
 --
 -- Baza danych: `Cakes`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `categories`
+--
+
+CREATE TABLE `categories` (
+  `category_id` int NOT NULL,
+  `category` text COLLATE utf8mb3_polish_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_polish_ci;
+
+--
+-- Zrzut danych tabeli `categories`
+--
+
+INSERT INTO `categories` (`category_id`, `category`) VALUES
+(1, 'Serniki'),
+(2, 'Torty'),
+(3, 'Ciasta z kremem'),
+(4, 'Ciasta z owocami'),
+(5, 'Ciasteczka');
 
 -- --------------------------------------------------------
 
@@ -98,16 +120,17 @@ CREATE TABLE `recipes` (
   `recipe_id` int NOT NULL,
   `recipe_name` text COLLATE utf8mb3_polish_ci NOT NULL,
   `ingridients_list` text COLLATE utf8mb3_polish_ci NOT NULL,
-  `steps_list` text COLLATE utf8mb3_polish_ci NOT NULL
+  `steps_list` text COLLATE utf8mb3_polish_ci NOT NULL,
+  `category_id` varchar(255) COLLATE utf8mb3_polish_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_polish_ci;
 
 --
 -- Zrzut danych tabeli `recipes`
 --
 
-INSERT INTO `recipes` (`recipe_id`, `recipe_name`, `ingridients_list`, `steps_list`) VALUES
-(1, 'Kremówka', '[1,2,3,4],[5,6,7,8,9,10,11,12]', '[1,2,3]'),
-(2, 'Sernik z białą czekoladą i karmelem\r\n', '[13,14,15,16],[17,18,19,20,21,22,23,24,25,26]', '[4,5,6]');
+INSERT INTO `recipes` (`recipe_id`, `recipe_name`, `ingridients_list`, `steps_list`, `category_id`) VALUES
+(1, 'Kremówka', '[1,2,3,4,5,6,7,8,9,10,11,12]', '[1,2,3]', '3'),
+(2, 'Sernik z białą czekoladą i karmelem\r\n', '[13,14,15,16,17,18,19,20,21,22,23,24,25,26]', '[4,5,6]', '1');
 
 -- --------------------------------------------------------
 
