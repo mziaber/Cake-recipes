@@ -1,0 +1,47 @@
+{% extends 'index.html' %}
+
+
+
+{% block content %}
+    <div class="container w-75 mt-4 p-3 rounded" style="background-color:rgb(243, 240, 237)">
+        <div class="row">
+            <div class="col-12">
+                <h1 class="font-monospace fs-1 fw-bold">Dodaj nowy przepis</h1>
+            </div>
+        </div>
+        <form>
+            <div class="row m-3 text-start justify-content-center">
+                <div class="col-5">
+                    <label for="recipe_name">Recipe name: </label>
+                    <input type="text" class="form-control" id="recipe_name" name="recipe_name">
+                </div>
+                <div class="col-5">
+                    <label for="category">Category: </label>
+                    <select class="form-control" id="category" name="category">
+                        <option selected>Choose...</option>
+                        <option value="1">Sernik</option>
+                        <option value="2">Torty</option>
+                        <option value="3">Ciasta z kremem</option>
+                        <option value="4">Ciasta z owocami</option>
+                        <option value="5">Ciasteczka</option>
+                    </select>
+                </div>
+            </div>
+     
+            <div id="wrapper">
+                <div id="field_div">
+                    <input type="button" class="btn btn-secondary mb-3" value="Dodaj kolejny składnik" onclick="add_field();">
+                </div>
+            </div>
+        </form>
+    </div>
+    <script>
+        function add_field()
+        {
+        var total_text=document.getElementsByClassName("input_text");
+        total_text=total_text.length+1;
+        document.getElementById("field_div").innerHTML=document.getElementById("field_div").innerHTML+
+        "<p><input type='text' class='input_text' id='ingridient"+total_text+"' placeholder='ingridient"+total_text+"' name=''ingridient"+total_text+"'><input type='button' value='Remove' onclick=remove_field('input_text"+total_text+"');></p>";
+        }
+    </script>
+{% endblock %}
