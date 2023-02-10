@@ -27,21 +27,28 @@
                     </select>
                 </div>
             </div>
-     
-            <div id="wrapper">
-                <div id="field_div">
-                    <input type="button" class="btn btn-secondary mb-3" value="Dodaj kolejny składnik" onclick="add_field();">
+            <div class="row m-3 text-start justify-content-center">
+                <div class="col-5 m-auto" id="field_div">
+                    <label for="add_ing_button" style="display:inline-block;">Składniki:</label>
+                    <input type="button" class="btn btn-secondary btn-sm m-2 pb-1" id="add_ing_button" value="Dodaj pole składniku" onclick="add_field();">
+                </div>
+                <div class="col-5">
+                    steps
                 </div>
             </div>
-        </form>
+    
+
+            
+        
     </div>
     <script>
+
         function add_field()
         {
-        var total_text=document.getElementsByClassName("input_text");
+        var total_text=document.getElementsByClassName("input-group");
         total_text=total_text.length+1;
         document.getElementById("field_div").innerHTML=document.getElementById("field_div").innerHTML+
-        "<p><input type='text' class='input_text' id='ingridient"+total_text+"' placeholder='ingridient"+total_text+"' name=''ingridient"+total_text+"'><input type='button' value='Remove' onclick=remove_field('input_text"+total_text+"');></p>";
+        "<p><div class='input-group mb-3'><input type='text' class='form-control' placeholder='Składnik"+total_text+"' id='ingridient"+total_text+"' name='ingridient"+total_text+"'><button class='btn btn-outline-secondary' type='button' id='remove'>Remove</button></div></p>"
         }
     </script>
 {% endblock %}
