@@ -28,12 +28,15 @@
                 </div>
             </div>
             <div class="row m-3 text-start justify-content-center">
-                <div class="col-5 m-auto" id="field_div">
-                    <label for="add_ing_button" style="display:inline-block;">Składniki:</label>
-                    <input type="button" class="btn btn-secondary btn-sm m-2 pb-1" id="add_ing_button" value="Dodaj pole składniku" onclick="add_field();">
+                <div class="col-5" id="field_div">
+                    <label for="add_ing_button m-2" style="display:inline-block;">Składniki:</label>
+                    <input type="button" class="btn btn-secondary btn-sm my-3 pb-1" id="add_ing_button" value="Dodaj pole składniku" onclick="add_field();">
+                    <input type="button" class="btn btn-secondary btn-sm my-3 pb-1" id="remove_ing_button" value="Usuń pole składniku" onclick="remove();">
                 </div>
-                <div class="col-5">
-                    steps
+                <div class="col-5" id="step_div">
+                    <label for="add_ing_button m-2" style="display:inline-block;">Kroki:</label>
+                    <input type="button" class="btn btn-secondary btn-sm my-3 pb-1" id="add_ing_button" value="Dodaj pole kroku" onclick="add_step();">
+                    <input type="button" class="btn btn-secondary btn-sm my-3 pb-1" id="remove_ing_button" value="Usuń pole kroku" onclick="remove_step();">
                 </div>
             </div>
     
@@ -45,10 +48,36 @@
 
         function add_field()
         {
-        var total_text=document.getElementsByClassName("input-group");
-        total_text=total_text.length+1;
-        document.getElementById("field_div").innerHTML=document.getElementById("field_div").innerHTML+
-        "<p><div class='input-group mb-3'><input type='text' class='form-control' placeholder='Składnik"+total_text+"' id='ingridient"+total_text+"' name='ingridient"+total_text+"'><button class='btn btn-outline-secondary' type='button' id='remove'>Remove</button></div></p>"
+            var total_text=document.getElementsByClassName("ingridient");
+            total_text=total_text.length+1;
+            document.getElementById("field_div").innerHTML=document.getElementById("field_div").innerHTML+
+            "<div class='ingridient mb-2' id='d_"+total_text+"'><input type='text' class='form-control' placeholder='Składnik"+total_text+"' id='ingridient"+total_text+"' name='ingridient"+total_text+"'></div>"
+        }
+        function remove(id)
+        {   
+            var total_text=document.getElementsByClassName("ingridient");
+            total_text=total_text.length
+            element = document.getElementById('d_'+total_text)
+            element.remove();
+        }
+
+        function add_step()
+        {
+            var total_text=document.getElementsByClassName("step");
+            total_text=total_text.length+1;
+            document.getElementById("step_div").innerHTML=document.getElementById("step_div").innerHTML+
+            "<div class='step mb-3' id='step"+total_text+"'>\
+                <input type='text' class='form-control mb-1' id='name"+total_text+"' name='name"+total_text+"' placeholder='Nazwa kroku"+total_text+"'>\
+                <textarea class='form-control' rows='3' placeholder='Krok"+total_text+"' id='step"+total_text+"' \
+                name='step"+total_text+"'></textarea> \
+                </div>"
+        }
+        function remove_step()
+        {
+            var total_text=document.getElementsByClassName("step");
+            total_text=total_text.length
+            element = document.getElementById('step'+total_text)
+            element.remove();
         }
     </script>
 {% endblock %}
