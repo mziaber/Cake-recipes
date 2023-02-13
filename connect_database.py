@@ -67,8 +67,16 @@ def category(id):
     category = cursor.fetchone()
     return render_template('category.html', recipes=recipes, category=category[0])
     
-@app.route("/add")
+
+@app.route("/add", methods=('GET','POST'))
 def add():
+    if request.method=='POST':
+        recipe_name = request.form['recipe_name']
+        category = request.form['category']
+        ingridients=[]
+        steps = {}
+        
+
     return render_template('add_recipe.html')
 
 if __name__ == "__main__":
