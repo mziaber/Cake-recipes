@@ -95,6 +95,25 @@ def add():
                 step = request.form['step_'+step]
                 steps[step_name]=step
 
+        ingridient_ids = []
+        step_ids = []
+
+        for ingridient in ingridients:
+            cursor.execute("INSERT INTO ingridients \
+                            VALUES (NULL,%s)", (ingridient,))
+            connection.commit()
+            cursor.execute("SELECT ingridient_id FROM ingridients WHERE ingridient=%s", (ingridient,))
+            ingridient_ids.append(cursor.fetchone()[0]) 
+        print(ingridient_ids)
+
+        for step_key in steps:
+            cursor.execute("INSERT INTO steps \
+                            VALUES (NULL,%s,%s)", (step_key, steps[step_key]))
+            connection.commit()
+            cursor.execute("SELECT step_id FROM steps WHERE step_name=%s", (step_key,))
+            step_ids.append(cursor.fetchone()[0]) 
+        print(step_ids)
+
         img = request.files['file']
         if img.filename == '':
             flash('No image selected')
