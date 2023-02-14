@@ -1,9 +1,18 @@
+import os
 import ast
 import mysql.connector
 from mysql.connector import Error
-from flask import Flask, render_template, request
+from werkzeug.utils import secure_filename
+from flask import Flask, render_template, request, flash, redirect, url_for
+
+IMG_UPLOAD_FOLDER = '/home/magda/Cake-recipes/img'
+IMG_ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 
 app=Flask(__name__)
+app.secret_key = "secret key"
+app.config['UPLOAD_FOLDER'] = IMG_UPLOAD_FOLDER
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
+
 
 try: 
     connection = mysql.connector.connect(host='172.17.0.2',
@@ -66,7 +75,9 @@ def category(id):
     cursor.execute("SELECT category FROM categories WHERE category_id=%s",(id,))
     category = cursor.fetchone()
     return render_template('category.html', recipes=recipes, category=category[0])
-    
+
+def allowed_file(filename):
+	return '.' in filename and filename.rsplit('.', 1)[1].lower() in IMG_ALLOWED_EXTENSIONS
 
 @app.route("/add", methods=('GET','POST'))
 def add():
@@ -75,7 +86,29 @@ def add():
         category = request.form['category']
         ingridients=[]
         steps = {}
-        
+        for field in request.form:
+            if 'ingridient' in field:
+                ingridients.append(request.form[field])
+            if 'stepname' in field:
+                step_name = request.form[field]
+                step = field.split('_')[1]
+                step = request.form['step_'+step]
+                steps[step_name]=step
+
+        img = request.files['file']
+        if img.filename == '':
+            flash('No image selected')
+            return redirect(request.url)
+
+        if img and allowed_file(img.filename):
+            img_name = secure_filename(img.filename)
+            img_path = os.path.join(app.config['UPLOAD_FOLDER'], img_name)
+            img.save(img_path)
+            flash('Image successfully uploaded and displayed below')
+        else:
+            flash('Allowed image types are -> png, jpg, jpeg, gif')
+            return redirect(request.url)
+
 
     return render_template('add_recipe.html')
 

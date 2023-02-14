@@ -9,7 +9,7 @@
                 <h1 class="font-monospace fs-1 fw-bold">Dodaj nowy przepis</h1>
             </div>
         </div>
-        <form method="POST">
+        <form method="POST" enctype="multipart/form-data">
             <div class="row m-3 text-start justify-content-center">
                 <div class="col-xl-5 col-lg-5 col-md-12 col-sm-12 col-12">
                     <label for="recipe_name">Recipe name: </label>
@@ -59,7 +59,7 @@
             <div class="row m-3 text-start justify-content-center">
                 <div class="col-xl-5 col-lg-5 col-md-12 col-sm-12 col-12">
                     <label for="img_field">Zdjęcie</label>
-                    <input type=file class="form-control" name=file id="img_filed">
+                    <input type=file class="form-control" name="file" id="file">
                 </div>
                 <div class="col-xl-5 col-lg-5 col-md-6 col-sm-12 col-12"></div>
             </div>
@@ -70,6 +70,15 @@
                 </div>
             </div>
         </form>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class=flashes>
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+        {% endwith %}
              
     </div>
 
@@ -107,9 +116,9 @@
             div.setAttribute("id", 'step'+total_number);
             div.classList.add('step');
             div.classList.add('mb-3');
-            inner_elem = "<input type='text' class='form-control mb-1' id='s_n_"+total_number+"' name='s_n_"+total_number+"' placeholder='Nazwa kroku"+total_number+"'>\
-                <textarea class='form-control' rows='3' placeholder='Krok"+total_number+"' id='step"+total_number+"' \
-                name='step"+total_number+"'></textarea>";
+            inner_elem = "<input type='text' class='form-control mb-1' id='stepname_"+total_number+"' name='stepname_"+total_number+"' placeholder='Nazwa kroku"+total_number+"'>\
+                <textarea class='form-control' rows='3' placeholder='Krok"+total_number+"' id='step_"+total_number+"' \
+                name='step_"+total_number+"'></textarea>";
             div.innerHTML = inner_elem.trim();
             step_div.appendChild(div);
         }
