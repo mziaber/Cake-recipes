@@ -13,12 +13,12 @@
             <div class="row m-3 text-start justify-content-center">
                 <div class="col-xl-5 col-lg-5 col-md-12 col-sm-12 col-12">
                     <label for="recipe_name">Recipe name: </label>
-                    <input type="text" class="form-control" id="recipe_name" name="recipe_name">
+                    <input type="text" class="form-control" id="recipe_name" name="recipe_name" required>
                 </div>
                 <div class="col-xl-5 col-lg-5 col-md-12 col-sm-12 col-12">
                     <label for="category">Category: </label>
-                    <select class="form-control" id="category" name="category">
-                        <option selected>Choose...</option>
+                    <select class="form-control" id="category" name="category" required>
+                        <option value="">Wybierz Kategorię</option>
                         <option value="1">Sernik</option>
                         <option value="2">Torty</option>
                         <option value="3">Ciasta z kremem</option>
@@ -59,7 +59,7 @@
             <div class="row m-3 text-start justify-content-center">
                 <div class="col-xl-5 col-lg-5 col-md-12 col-sm-12 col-12">
                     <label for="img_field">Zdjęcie</label>
-                    <input type=file class="form-control" name="file" id="file">
+                    <input type=file class="form-control" name="file" id="file" required>
                 </div>
                 <div class="col-xl-5 col-lg-5 col-md-6 col-sm-12 col-12"></div>
             </div>
@@ -93,7 +93,7 @@
             div.setAttribute("id", 'i_'+total_number);
             div.classList.add('ingridient')
             div.classList.add('mb-1')
-            inner_elem = "<input type='text' class='form-control' placeholder='Składnik"+total_number+"' id='ingridient"+total_number+"' name='ingridient"+total_number+"'>"
+            inner_elem = "<input type='text' class='form-control' placeholder='Składnik"+total_number+"' id='ingridient"+total_number+"' name='ingridient"+total_number+"' required>"
             div.innerHTML = inner_elem.trim();
             field_div.appendChild(div);
 
@@ -116,9 +116,9 @@
             div.setAttribute("id", 'step'+total_number);
             div.classList.add('step');
             div.classList.add('mb-3');
-            inner_elem = "<input type='text' class='form-control mb-1' id='stepname_"+total_number+"' name='stepname_"+total_number+"' placeholder='Nazwa kroku"+total_number+"'>\
+            inner_elem = "<input type='text' class='form-control mb-1' id='stepname_"+total_number+"' name='stepname_"+total_number+"' placeholder='Nazwa kroku"+total_number+"' required>\
                 <textarea class='form-control' rows='3' placeholder='Krok"+total_number+"' id='step_"+total_number+"' \
-                name='step_"+total_number+"'></textarea>";
+                name='step_"+total_number+"' required></textarea>";
             div.innerHTML = inner_elem.trim();
             step_div.appendChild(div);
         }
