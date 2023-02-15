@@ -38,14 +38,27 @@
 
 
 {% block content %}
+
 <div class="container w-75">
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-secondary alert-dismissible fade show m-0 mt-4 p-1 px-2" role="alert">
+                <strong>{{ message }}</strong> 
+                <button class="btn ms-2" data-bs-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
     {% block h1 %}{% endblock %}
     <div class="row justify-content-start">
         {% for recipe in recipes %}
             <div class="col-lg-4 col-md-6 col-sm-12 col-12">
                 <div class="container_img mt-4">
                 <a href="/recipe/{{ recipe['id'] }}">
-                    <img src="{{ recipe['img_path'] }}" class="img-responsive w-100">
+                    <img src="{{ recipe['img_path'] }}" class="img-fluid w-100">
                     <div class="overlay_img">{{ recipe['recipe_name'] }}</div>
                 </a>
                 </div>

@@ -38,12 +38,13 @@ def display_images():
 
 @app.route("/recipe/<id>")
 def display_specific_recipe(id):
-    cursor.execute("SELECT recipes.recipe_name, recipes.ingridients_list, recipes.steps_list, images.image_path FROM recipes INNER JOIN images ON recipes.recipe_id=images.recipe_id WHERE recipes.recipe_id=%s", (id,))
+    cursor.execute("SELECT recipes.recipe_name, recipes.ingridients_list, recipes.steps_list, images.image_path, recipes.recipe_id FROM recipes INNER JOIN images ON recipes.recipe_id=images.recipe_id WHERE recipes.recipe_id=%s", (id,))
     recipe=cursor.fetchone()
     recipe_name = recipe[0]
     ingridients_ids = ast.literal_eval(recipe[1])
     steps_ids = ast.literal_eval(recipe[2])
     img_path = recipe[3]
+    recipe_id = recipe[4]
 
     steps = []
 
@@ -59,7 +60,7 @@ def display_specific_recipe(id):
         ingridient = cursor.fetchone()
         ingridients.append(ingridient[0])
 
-    return render_template('recipe.html', recipe=recipe_name, ingridients=ingridients, steps=steps, img_path=img_path)
+    return render_template('recipe.html', recipe=recipe_name, ingridients=ingridients, steps=steps, img_path=img_path, recipe_id=recipe_id)
 
 @app.route("/categories/<id>")
 def category(id):
@@ -129,16 +130,44 @@ def add():
             img_name = secure_filename(img.filename)
             img_path = os.path.join(app.config['UPLOAD_FOLDER'], img_name)
             img.save(img_path)
-            flash('Image successfully uploaded and displayed below')
             img_path=img_path.split('Cake-recipes')[1]
             cursor.execute("INSERT INTO images VALUES (NULL, %s,%s)", (recipe_id, img_path))
             connection.commit()
+            flash('Przepis dodany')
+            return redirect('/')
         else:
             flash('Allowed image types are -> png, jpg, jpeg, gif')
             return redirect(request.url)
-        
-
+    
     return render_template('add_recipe.html')
+
+@app.route("/delete/", methods=('GET','POST'))
+def delete_recipe():
+    if request.method == 'POST':
+        id = request.form['delete']
+       
+        cursor.execute("SELECT ingridients_list, steps_list FROM recipes WHERE recipe_id=%s", (id,))
+        recipe=cursor.fetchone()
+        ingridients_ids = ast.literal_eval(recipe[0])
+        steps_ids = ast.literal_eval(recipe[1])
+
+        for ingridient_id in ingridients_ids:
+            cursor.execute('DELETE FROM ingridients WHERE ingridient_id=%s', (ingridient_id,))
+            connection.commit()
+
+        for step_id in steps_ids:
+            cursor.execute('DELETE FROM steps WHERE step_id=%s', (step_id,))
+            connection.commit()
+
+        cursor.execute('DELETE FROM images WHERE recipe_id=%s', (id,))
+        connection.commit()
+
+        cursor.execute('DELETE FROM recipes WHERE recipe_id=%s', (id,))
+        connection.commit()
+
+    flash('Przepis usunięty')
+    return redirect('/')
+         
 
 if __name__ == "__main__":
     app.run()
