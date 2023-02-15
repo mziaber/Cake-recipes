@@ -5,7 +5,7 @@ from mysql.connector import Error
 from werkzeug.utils import secure_filename
 from flask import Flask, render_template, request, flash, redirect, url_for
 
-IMG_UPLOAD_FOLDER = '/home/magda/Cake-recipes/img'
+IMG_UPLOAD_FOLDER = '/home/magda/Cake-recipes/static'
 IMG_ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 
 app=Flask(__name__)
@@ -104,7 +104,7 @@ def add():
             connection.commit()
             cursor.execute("SELECT ingridient_id FROM ingridients WHERE ingridient=%s", (ingridient,))
             ingridient_ids.append(cursor.fetchone()[0]) 
-        print(ingridient_ids)
+
 
         for step_key in steps:
             cursor.execute("INSERT INTO steps \
@@ -112,7 +112,12 @@ def add():
             connection.commit()
             cursor.execute("SELECT step_id FROM steps WHERE step_name=%s", (step_key,))
             step_ids.append(cursor.fetchone()[0]) 
-        print(step_ids)
+
+        cursor.execute("INSERT INTO recipes VALUES (NULL,%s,%s,%s,%s)", (recipe_name, str(ingridient_ids), str(step_ids), category,))
+        connection.commit()
+
+        cursor.execute("SELECT recipe_id FROM recipes WHERE recipe_name=%s", (recipe_name,))
+        recipe_id = cursor.fetchone()[0]
 
         img = request.files['file']
         if img.filename == '':
@@ -128,6 +133,7 @@ def add():
             flash('Allowed image types are -> png, jpg, jpeg, gif')
             return redirect(request.url)
 
+        cursor.execute("INSERT INTO images VALUES (NULL, %s,%s)", (recipe_id, img_path))
 
     return render_template('add_recipe.html')
 
