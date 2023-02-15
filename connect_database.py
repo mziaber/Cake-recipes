@@ -159,11 +159,12 @@ def delete_recipe():
             cursor.execute('DELETE FROM steps WHERE step_id=%s', (step_id,))
             connection.commit()
 
-        cursor.execute('DELETE FROM images WHERE recipe_id=%s', (id,))
-        connection.commit()
-
         cursor.execute('DELETE FROM recipes WHERE recipe_id=%s', (id,))
         connection.commit()
+
+        cursor.execute('DELETE FROM images WHERE recipe_id=%s', (id,))
+        connection.commit()
+        
 
     flash('Przepis usunięty')
     return redirect('/')
