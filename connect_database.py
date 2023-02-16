@@ -162,10 +162,17 @@ def delete_recipe():
         cursor.execute('DELETE FROM recipes WHERE recipe_id=%s', (id,))
         connection.commit()
 
+        cursor.execute('SELECT image_path FROM images WHERE recipe_id=%s',(id,))
+        image_path=cursor.fetchone()[0]
+
+        if os.path.exists(str(image_path[1:])):
+            os.remove(str(image_path[1:]))
+        else:
+            print(image_path[1:])
+        
         cursor.execute('DELETE FROM images WHERE recipe_id=%s', (id,))
         connection.commit()
-        
-
+    
     flash('Przepis usunięty')
     return redirect('/')
          
