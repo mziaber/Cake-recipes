@@ -83,10 +83,13 @@ def allowed_file(filename):
 @app.route("/add", methods=('GET','POST'))
 def add():
     if request.method=='POST':
+
         recipe_name = request.form['recipe_name']
         category = request.form['category']
+        img = request.files['file']
         ingridients=[]
         steps = {}
+
         for field in request.form:
             if 'ingridient' in field:
                 ingridients.append(request.form[field])
@@ -99,56 +102,47 @@ def add():
         ingridient_ids = []
         step_ids = []
 
-        if ingridients:
+        if ingridients and steps and allowed_file(img.filename):
+
             for ingridient in ingridients:
                 cursor.execute("INSERT INTO ingridients \
                                 VALUES (NULL,%s)", (ingridient,))
                 connection.commit()
                 cursor.execute("SELECT ingridient_id FROM ingridients WHERE ingridient=%s ORDER BY ingridient_id DESC;", (ingridient,))
                 ingridient_ids.append(cursor.fetchall()[0][0]) 
-        else:
-            flash("Brak składników")
-            redirect(request.url)
 
-        if steps:
             for step_key in steps:
                 cursor.execute("INSERT INTO steps \
                                 VALUES (NULL,%s,%s)", (step_key, steps[step_key]))
                 connection.commit()
                 cursor.execute("SELECT step_id FROM steps WHERE step_name=%s ORDER BY step_id DESC;", (step_key,))
                 step_ids.append(cursor.fetchall()[0][0]) 
-        else:
-            flash("Brak opisu kroków")
-            redirect(request.url)
 
-    
-        cursor.execute("INSERT INTO recipes VALUES (NULL,%s,%s,%s,%s)", (recipe_name, str(ingridient_ids), str(step_ids), category,))
-        connection.commit()
+                cursor.execute("INSERT INTO recipes VALUES (NULL,%s,%s,%s,%s)", (recipe_name, str(ingridient_ids), str(step_ids), category,))
+                connection.commit()
 
-        cursor.execute("SELECT recipe_id FROM recipes WHERE recipe_name=%s", (recipe_name,))
-        recipe_id = cursor.fetchone()[0]
+                cursor.execute("SELECT recipe_id FROM recipes WHERE recipe_name=%s", (recipe_name,))
+                recipe_id = cursor.fetchone()[0]
 
-        img = request.files['file']
-
-        if img.filename == '':
-            flash('No image selected')
-            return redirect(request.url)
-
-        if img and allowed_file(img.filename):
             img_name = secure_filename(img.filename)
             img_path = os.path.join(app.config['UPLOAD_FOLDER'], img_name)
             img.save(img_path)
             img_path=img_path.split('Cake-recipes')[1]
             cursor.execute("INSERT INTO images VALUES (NULL, %s,%s)", (recipe_id, img_path))
             connection.commit()
+
             flash('Przepis dodany')
-            return redirect('/')
+            redirect('/')
+
+        elif not allowed_file(img.filename):
+            flash('Dozwolony typ pliku: png, jpg, jpeg!')
+        
         else:
-            flash('Allowed image types are -> png, jpg, jpeg, gif')
-            return redirect(request.url)
+            flash('Niepełny formularz. Dodaj składniki/kroki!')
        
     
     return render_template('add_recipe.html')
+
 
 @app.route("/delete/", methods=('GET','POST'))
 def delete_recipe():

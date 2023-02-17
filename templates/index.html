@@ -20,11 +20,6 @@
       margin: auto;
     }
 
-    .content {
-      position: relative;
-      min-height: 100vh;
-    }
-
     .navbar {
       background-color:#e0afa0;
     }
@@ -47,7 +42,7 @@
 </head>
 
 <body class="custombody">
-  <nav class="navbar navbar-expand-lg navbar-dark p-1 mb-4" style="box-shadow: 0px 0px 5px 1px #bcb8b1; font-size: 20px;">
+  <nav class="navbar navbar-expand-lg navbar-dark p-1 mb-4 sticky-top" style="box-shadow: 0px 0px 5px 1px #bcb8b1; font-size: 20px;">
     <div class="container w-75">
       <a class="navbar-brand fw-bold" href="/">Wypieczone</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
@@ -81,13 +76,11 @@
     </div>
   </nav>
   
-  <div class="content">
     {% block content %} {% endblock %}
-  </div>
 
-  <footer class="bg-light text-center w-100" style="position: sticky;">
+  <footer class="bg-light text-center w-100 fixed-bottom">
  
-      <div class="text-center p-3" style="background-color: #fcd5ce; box-shadow: 0px 0px 5px 1px #bcb8b1;">
+      <div class="text-center p-2" style="background-color: #fcd5ce; box-shadow: 0px 0px 5px 1px #bcb8b1;">
         © 2023 Copyright: Magdalena Ziąber
       </div>
 
