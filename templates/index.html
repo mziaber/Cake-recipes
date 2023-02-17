@@ -21,8 +21,9 @@
     }
 
     .navbar {
-      background-color: #9d6b53;
+      background-color:#e0afa0;
     }
+   
 
     input[type='search']:focus {
       border-color: #432818;
@@ -41,7 +42,7 @@
 </head>
 
 <body class="custombody">
-  <nav class="navbar navbar-expand-lg navbar-dark">
+  <nav class="navbar navbar-expand-lg navbar-dark p-1 mb-4" style="box-shadow: 0px 0px 5px 1px #bcb8b1; font-size: 20px;">
     <div class="container w-75">
       <a class="navbar-brand fw-bold" href="/">Wypieczone</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
@@ -50,7 +51,7 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item dropdown">
+          <li class="nav-item dropdown p-1">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
               data-bs-toggle="dropdown" aria-expanded="false">
               Kategorie
@@ -63,7 +64,7 @@
               <li><a class="dropdown-item" href="/categories/5">Ciasteczka</a></li>
             </ul>
           </li>
-          <li class="nav-item">
+          <li class="nav-item p-1">
             <a class="nav-link" href="/add">Dodaj przepis</a>
           </li>
         </ul>

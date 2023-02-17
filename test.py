@@ -1,7 +1,0 @@
-import os
-
-
-if os.path.exists('static/323176911_2978264049133746_4836785155161413123_n.jpg'):
-    os.remove('static/323176911_2978264049133746_4836785155161413123_n.jpg')
-else:
-    print('.')
