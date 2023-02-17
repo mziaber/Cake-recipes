@@ -99,21 +99,29 @@ def add():
         ingridient_ids = []
         step_ids = []
 
-        for ingridient in ingridients:
-            cursor.execute("INSERT INTO ingridients \
-                            VALUES (NULL,%s)", (ingridient,))
-            connection.commit()
-            cursor.execute("SELECT ingridient_id FROM ingridients WHERE ingridient=%s ORDER BY ingridient_id DESC;", (ingridient,))
-            ingridient_ids.append(cursor.fetchall()[0][0]) 
+        if ingridients:
+            for ingridient in ingridients:
+                cursor.execute("INSERT INTO ingridients \
+                                VALUES (NULL,%s)", (ingridient,))
+                connection.commit()
+                cursor.execute("SELECT ingridient_id FROM ingridients WHERE ingridient=%s ORDER BY ingridient_id DESC;", (ingridient,))
+                ingridient_ids.append(cursor.fetchall()[0][0]) 
+        else:
+            flash("Brak składników")
+            redirect(request.url)
 
+        if steps:
+            for step_key in steps:
+                cursor.execute("INSERT INTO steps \
+                                VALUES (NULL,%s,%s)", (step_key, steps[step_key]))
+                connection.commit()
+                cursor.execute("SELECT step_id FROM steps WHERE step_name=%s ORDER BY step_id DESC;", (step_key,))
+                step_ids.append(cursor.fetchall()[0][0]) 
+        else:
+            flash("Brak opisu kroków")
+            redirect(request.url)
 
-        for step_key in steps:
-            cursor.execute("INSERT INTO steps \
-                            VALUES (NULL,%s,%s)", (step_key, steps[step_key]))
-            connection.commit()
-            cursor.execute("SELECT step_id FROM steps WHERE step_name=%s ORDER BY step_id DESC;", (step_key,))
-            step_ids.append(cursor.fetchall()[0][0]) 
-
+    
         cursor.execute("INSERT INTO recipes VALUES (NULL,%s,%s,%s,%s)", (recipe_name, str(ingridient_ids), str(step_ids), category,))
         connection.commit()
 

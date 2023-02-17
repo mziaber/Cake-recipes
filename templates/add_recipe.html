@@ -93,8 +93,10 @@
         {   
             var total_number=document.getElementsByClassName("ingridient");
             total_number=total_number.length
+            if (total_number!=0){
             element = document.getElementById('i_'+total_number)
             element.remove();
+            }
         }
 
         function add_step()
@@ -116,8 +118,10 @@
         {
             var total_number=document.getElementsByClassName("step");
             total_number=total_number.length
-            element = document.getElementById('step'+total_number)
-            element.remove();
+            if (total_number!=0){
+                element = document.getElementById('step'+total_number)
+                element.remove();
+            }
         }
     </script>
 {% endblock %}
