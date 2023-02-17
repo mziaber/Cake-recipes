@@ -118,11 +118,11 @@ def add():
                 cursor.execute("SELECT step_id FROM steps WHERE step_name=%s ORDER BY step_id DESC;", (step_key,))
                 step_ids.append(cursor.fetchall()[0][0]) 
 
-                cursor.execute("INSERT INTO recipes VALUES (NULL,%s,%s,%s,%s)", (recipe_name, str(ingridient_ids), str(step_ids), category,))
-                connection.commit()
+            cursor.execute("INSERT INTO recipes VALUES (NULL,%s,%s,%s,%s)", (recipe_name, str(ingridient_ids), str(step_ids), category,))
+            connection.commit()
 
-                cursor.execute("SELECT recipe_id FROM recipes WHERE recipe_name=%s", (recipe_name,))
-                recipe_id = cursor.fetchone()[0]
+            cursor.execute("SELECT recipe_id FROM recipes WHERE recipe_name=%s", (recipe_name,))
+            recipe_id = cursor.fetchone()[0]
 
             img_name = secure_filename(img.filename)
             img_path = os.path.join(app.config['UPLOAD_FOLDER'], img_name)
@@ -131,8 +131,9 @@ def add():
             cursor.execute("INSERT INTO images VALUES (NULL, %s,%s)", (recipe_id, img_path))
             connection.commit()
 
-            flash('Przepis dodany')
             redirect('/')
+            flash('Przepis dodany')
+            
 
         elif not allowed_file(img.filename):
             flash('Dozwolony typ pliku: png, jpg, jpeg!')
