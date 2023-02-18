@@ -131,8 +131,8 @@ def add():
             cursor.execute("INSERT INTO images VALUES (NULL, %s,%s)", (recipe_id, img_path))
             connection.commit()
 
-            redirect('/')
             flash('Przepis dodany')
+            return redirect('/')
             
 
         elif not allowed_file(img.filename):
