@@ -9,7 +9,7 @@ try:
     connection = mysql.connector.connect(host='172.17.0.2',
                                          database='Cakes', 
                                          user='root', 
-                                         password='madzia123')
+                                         password='')
 
     if connection.is_connected():
         cursor = connection.cursor()       
