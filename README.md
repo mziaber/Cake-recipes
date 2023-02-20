@@ -1,52 +1,39 @@
-# Tasks_reminder - Docker verision
+# Cake recipes
 
-Web app made to keep and share task list.
+Web app made to store cakes recipes, allows CRUD opartions on database.
 
-## Prerequirements (no need to install anything else)
-* Docker
-* Docker-compose
+## Prerequirements
+* MySQL database server
+* Python 
 
 ## Installation
-```sh
-$ docker-compose up -d --build
-$ docker exec tasks_reminder_tasks_django_1 python manage.py migrate
+* import Cakes.sql to MySQL database server
+```
+pip install -r requirements.txt
+IMG_FOLDER_PATH=/img_folder MYSQL_HOST=localhost MYSQL_DB_NAME=Cakes MYSQL_USER=root MYSQL_PASSWD=root python3 cake_recipes.py 
 ```
 
-## Usage
-* Main website on 8080 local port
-
 ## Used frameworks / tools
-* Docker
-* Django
-* PostreSQL
+* Flask
+* MySQL
 * Bootstrap
-
-## Docker list
-* Django server
-* PostgreSQL database
-
 ## Database model screenshot
-Database model (database_model.dbm) was created with pgModeler
-![alt text](https://github.com/miloszk9/Tasks_reminder/blob/master/example%20screenshots/pgmodeler_screenshot.PNG?raw=true)
+![alt text]()
 
 ## Example usage screenshots
 
-### Tasks list preview
-![alt text](https://github.com/miloszk9/Tasks_reminder/blob/master/example%20screenshots/tasks_list.PNG?raw=true)
+### Home page
+![alt text]()
 
-### Adding or editing task form
-![alt text](https://github.com/miloszk9/Tasks_reminder/blob/master/example%20screenshots/tasks_create.PNG?raw=true)
+## Category page 
 
-### Friends list
-![alt text](https://github.com/miloszk9/Tasks_reminder/blob/master/example%20screenshots/friendlist.PNG?raw=true)
+### Recipe view
+![alt text]()
 
-### Tasks sharing
-![alt text](https://github.com/miloszk9/Tasks_reminder/blob/master/example%20screenshots/task_share.PNG?raw=true)
+### Deleting recipe
+![alt text]()
 
-### Birthday reminder
-![alt text](https://github.com/miloszk9/Tasks_reminder/blob/master/example%20screenshots/birthday_reminder.PNG?raw=true)
+### Adding new recipe
+![alt text]()
 
-### Mobile and tablet version
-![alt text](https://github.com/miloszk9/Tasks_reminder/blob/master/example%20screenshots/tablet_version.PNG?raw=true)
-
-Made by: Miłosz Kaszuba
+Made by: Magdalena Ziąber
