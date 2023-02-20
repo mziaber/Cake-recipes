@@ -17,23 +17,19 @@ IMG_FOLDER_PATH=/img_folder MYSQL_HOST=localhost MYSQL_DB_NAME=Cakes MYSQL_USER=
 * Flask
 * MySQL
 * Bootstrap
-## Database model screenshot
-![alt text]()
 
 ## Example usage screenshots
 
 ### Home page
-![alt text]()
-
-## Category page 
+![alt text](https://github.com/mziaber/Cake-recipes/blob/main/screenshots/home_page.png?raw=true)
 
 ### Recipe view
-![alt text]()
+![alt text](https://github.com/mziaber/Cake-recipes/blob/main/screenshots/recipe.png?raw=true)
 
 ### Deleting recipe
-![alt text]()
+![alt text](https://github.com/mziaber/Cake-recipes/blob/main/screenshots/delete_recipe.png?raw=true)
 
 ### Adding new recipe
-![alt text]()
+![alt text](https://github.com/mziaber/Cake-recipes/blob/main/screenshots/add_recipe.png?raw=true)
 
 Made by: Magdalena Ziąber
