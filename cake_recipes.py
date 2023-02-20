@@ -4,7 +4,7 @@ import mysql.connector
 from mysql.connector import Error
 from flask import Flask, render_template, request, flash, redirect, url_for
 
-IMG_UPLOAD_FOLDER = '/home/magda/Cake-recipes/static'
+IMG_UPLOAD_FOLDER = '/static'
 IMG_ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 
 app=Flask(__name__)
