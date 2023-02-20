@@ -1,38 +1,66 @@
 {% extends 'index.html'%}
 
 {% block content %}
-  <div class="container text-center mt-4 rounded w-75 pb-5" style="background-color: rgb(243, 240, 237);">
-    <div class="row p-3">
+  <div class="container text-center my-4 rounded w-75 pb-5" style="background-color: rgb(243, 240, 237); box-shadow: 0px 0px 5px 1px #bcb8b1; ">
+    <div class="row pt-4 mb-4">
       <div class="col">
         <h1 class="font-monospace fs-1 fw-bold">{{ recipe }}</h1>
       </div>
     </div>
-    <div class="row justify-content-center">
-      <div class="col-md-4 col-sm-12 align-self-center">
-        <h2 class="fs-3">Składniki: </h2>
+    <div class="row justify-content-evenly px-5">
+      <div class="col-lg-3 col-md-12 align-self-center">
+        <h2 class="fs-3">Składniki:</h2>
         <hr>
-        <ul>
+        <ul class="row justify-content-evenly px-5">
           {% for ingridient in ingridients%}
-          <li class="p-0 m-0">{{ ingridient }}</li>
+          <li class="p-0 m-0" style="list-style-type: none;">{{ ingridient }}</li>
           {% endfor %}
         </ul>
         <hr>
-       
       </div>
-      <div class="col-md-5 col-sm-12 align-self-center">
-        <img src="{{ img_path }}" class="img-fluid w-75 rounded-3">
+      <div class="col-lg-5 col-md-12 align-self-center">
+        <img src={{ img_path }} class="img-responsive w-100 rounded-3">
       </div>
     </div>  
-    <div class="row justify-content-center mt-4">
-      <div class="col-11" >
+    <div class="row justify-content-center mt-5">
+      <div class="col-10" style="text-align: justify;">
         {% for step in steps %}
-        <h2 class="fs-2">{{ step['step_name'] }}</h2>
-        <p class="text">{{ step['step'] }}</p>
+        <h2 class="fs-4 mb-3">{{ step['step_name'] }}</h2>
+        <p>{{ step['step'] }}</p>
         {% endfor %}
+      </div>
+    </div>
+    <div class='row justify-content-center mt-5'>
+      <div class="col-3">
+        
+        <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+          Usuń przepis
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16">
+            <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z"/>
+          </svg>
+        </button>
+        
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Usuń przepis</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                Czy napewno chcesz usunąć przepis o nazwie "{{ recipe }}"?
+              </div>
+              <div class="modal-footer">
+                <form action="/delete" method="POST"><button type="submit" class="btn btn-danger" name="delete" value="{{ recipe_id }}">Tak, usuń</button></form>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Anuluj</button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
    
-
 {% endblock %}
   
