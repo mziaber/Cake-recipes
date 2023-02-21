@@ -3,137 +3,144 @@
 
 
 {% block content %}
-    {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            {% for message in messages %}
-            <div class="container alert alert-danger alert-dismissible fade show my-4 p-1 px-2 w-75" role="alert">
-                <strong>{{ message }}</strong> 
-                <button class="btn ms-2" data-bs-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            {% endfor %}
-        {% endif %}
-    {% endwith %}
-    <div class="container w-75 my-4 p-3 rounded" style="background-color:rgb(243, 240, 237); box-shadow: 0px 0px 5px 1px #bcb8b1;">
-        <div class="row">
-            <div class="col-12">
-                <h1 class="font-monospace fs-1 fw-bold">Dodaj nowy przepis</h1>
-            </div>
-        </div>
-        <form method="POST" enctype="multipart/form-data">
-            <div class="row m-3 text-start justify-content-center">
-                <div class="col-xl-5 col-lg-5 col-md-12 col-sm-12 col-12">
-                    <label for="recipe_name">Nazwa: </label>
-                    <input type="text" class="form-control" id="recipe_name" name="recipe_name" required>
-                </div>
-                <div class="col-xl-5 col-lg-5 col-md-12 col-sm-12 col-12">
-                    <label for="category">Kategoria: </label>
-                    <select class="form-control" id="category" name="category" required>
-                        <option value="">Wybierz Kategorię</option>
-                        <option value="1">Sernik</option>
-                        <option value="2">Torty</option>
-                        <option value="3">Ciasta z kremem</option>
-                        <option value="4">Ciasta z owocami</option>
-                        <option value="5">Ciasteczka</option>
-                    </select>
-                </div>
-            </div>
-            <div class="row m-3 text-start justify-content-center">
-                <div class="col-xl-5 col-lg-5 col-md-12 col-sm-12 col-12" id="field_div">
-                    <label for="add_ing_button" style="display: inline-block;">Składniki:</label>
-                    <button type="button" class="btn btn-secondary btn-sm ms-3 my-3 pb-1" id="add_ing_button"  onclick="add_field();">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
-                        </svg>
-                    </button>
-                    <button type="button" class="btn btn-secondary btn-sm my-3 pb-1" id="remove_ing_button" onclick="remove();">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
-                            <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
-                        </svg>
-                    </button>
-                </div>
-                <div class="col-xl-5 col-lg-5 col-md-12 col-sm-12 col-12" id="step_div">
-                    <label for="add_ing_button m-2" style="display:inline-block;">Kroki:</label>
-                    <button type="button" class="btn btn-secondary btn-sm ms-3 my-3 pb-1" id="add_ing_button" onclick="add_step();">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
-                        </svg>
-                    </button>
-                    <button type="button" class="btn btn-secondary btn-sm my-3 pb-1" id="remove_ing_button" onclick="remove_step();">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
-                            <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
-                        </svg>
-                    </button>
-                </div>
-            </div>
-
-            <div class="row m-3 text-start justify-content-center">
-                <div class="col-xl-5 col-lg-5 col-md-12 col-sm-12 col-12">
-                    <label for="img_field">Zdjęcie</label>
-                    <input type=file class="form-control" name="file" id="file" required>
-                </div>
-                <div class="col-xl-5 col-lg-5 col-md-6 col-sm-12 col-12"></div>
-            </div>
-
-            <div class="row m-5 text-center">
-                <div>
-                    <input type="submit" class="btn btn-secondary" value="Zatwierdź">  
-                </div>
-            </div>
-        </form>        
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+{% for message in messages %}
+<div class="container alert alert-danger alert-dismissible fade show my-4 p-1 px-2 w-75" role="alert">
+  <strong>{{ message }}</strong>
+  <button class="btn ms-2" data-bs-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+{% endfor %}
+{% endif %}
+{% endwith %}
+<div class="container w-75 my-4 p-3 rounded"
+  style="background-color:rgb(243, 240, 237); box-shadow: 0px 0px 5px 1px #bcb8b1;">
+  <div class="row">
+    <div class="col-12">
+      <h1 class="font-monospace fs-1 fw-bold">Dodaj nowy przepis</h1>
+    </div>
+  </div>
+  <form method="POST" enctype="multipart/form-data">
+    <div class="row m-3 text-start justify-content-center">
+      <div class="col-xl-5 col-lg-5 col-md-12 col-sm-12 col-12">
+        <label for="recipe_name">Nazwa: </label>
+        <input type="text" class="form-control" id="recipe_name" name="recipe_name" required>
+      </div>
+      <div class="col-xl-5 col-lg-5 col-md-12 col-sm-12 col-12">
+        <label for="category">Kategoria: </label>
+        <select class="form-control" id="category" name="category" required>
+          <option value="">Wybierz Kategorię</option>
+          <option value="1">Sernik</option>
+          <option value="2">Torty</option>
+          <option value="3">Ciasta z kremem</option>
+          <option value="4">Ciasta z owocami</option>
+          <option value="5">Ciasteczka</option>
+        </select>
+      </div>
+    </div>
+    <div class="row m-3 text-start justify-content-center">
+      <div class="col-xl-5 col-lg-5 col-md-12 col-sm-12 col-12" id="field_div">
+        <label for="add_ing_button" style="display: inline-block;">Składniki:</label>
+        <button type="button" class="btn btn-secondary btn-sm ms-3 my-3 pb-1" id="add_ing_button"
+          onclick="add_field();">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg"
+            viewBox="0 0 16 16">
+            <path fill-rule="evenodd"
+              d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z" />
+          </svg>
+        </button>
+        <button type="button" class="btn btn-secondary btn-sm my-3 pb-1" id="remove_ing_button" onclick="remove();">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3"
+            viewBox="0 0 16 16">
+            <path
+              d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z" />
+          </svg>
+        </button>
+      </div>
+      <div class="col-xl-5 col-lg-5 col-md-12 col-sm-12 col-12" id="step_div">
+        <label for="add_ing_button m-2" style="display:inline-block;">Kroki:</label>
+        <button type="button" class="btn btn-secondary btn-sm ms-3 my-3 pb-1" id="add_ing_button" onclick="add_step();">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg"
+            viewBox="0 0 16 16">
+            <path fill-rule="evenodd"
+              d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z" />
+          </svg>
+        </button>
+        <button type="button" class="btn btn-secondary btn-sm my-3 pb-1" id="remove_ing_button"
+          onclick="remove_step();">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3"
+            viewBox="0 0 16 16">
+            <path
+              d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z" />
+          </svg>
+        </button>
+      </div>
     </div>
 
-    <script>
+    <div class="row m-3 text-start justify-content-center">
+      <div class="col-xl-5 col-lg-5 col-md-12 col-sm-12 col-12">
+        <label for="img_field">Zdjęcie</label>
+        <input type=file class="form-control" name="file" id="file" required>
+      </div>
+      <div class="col-xl-5 col-lg-5 col-md-6 col-sm-12 col-12"></div>
+    </div>
 
-        function add_field()
-        {
-            var total_number=document.getElementsByClassName("ingridient");
-            total_number=total_number.length+1;
-            var field_div = document.getElementById("field_div");
-            var div = document.createElement('div');
-            div.setAttribute("id", 'i_'+total_number);
-            div.classList.add('ingridient')
-            div.classList.add('mb-1')
-            inner_elem = "<input type='text' class='form-control' placeholder='Składnik"+total_number+"' id='ingridient"+total_number+"' name='ingridient"+total_number+"' required>"
-            div.innerHTML = inner_elem.trim();
-            field_div.appendChild(div);
+    <div class="row m-5 text-center">
+      <div>
+        <input type="submit" class="btn btn-secondary" value="Zatwierdź">
+      </div>
+    </div>
+  </form>
+</div>
 
-        }
+<script>
 
-        function remove(id)
-        {   
-            var total_number=document.getElementsByClassName("ingridient");
-            total_number=total_number.length
-            if (total_number!=0){
-            element = document.getElementById('i_'+total_number)
-            element.remove();
-            }
-        }
+  function add_field() {
+    var total_number = document.getElementsByClassName("ingridient");
+    total_number = total_number.length + 1;
+    var field_div = document.getElementById("field_div");
+    var div = document.createElement('div');
+    div.setAttribute("id", 'i_' + total_number);
+    div.classList.add('ingridient')
+    div.classList.add('mb-1')
+    inner_elem = "<input type='text' class='form-control' placeholder='Składnik" + total_number + "' id='ingridient" + total_number + "' name='ingridient" + total_number + "' required>"
+    div.innerHTML = inner_elem.trim();
+    field_div.appendChild(div);
 
-        function add_step()
-        {
-            var total_number=document.getElementsByClassName("step");
-            total_number=total_number.length+1;
-            var step_div = document.getElementById("step_div")
-            var div = document.createElement('div');
-            div.setAttribute("id", 'step'+total_number);
-            div.classList.add('step');
-            div.classList.add('mb-3');
-            inner_elem = "<input type='text' class='form-control mb-1' id='stepname_"+total_number+"' name='stepname_"+total_number+"' placeholder='Nazwa kroku"+total_number+"' required>\
-                <textarea class='form-control' rows='3' placeholder='Krok"+total_number+"' id='step_"+total_number+"' \
-                name='step_"+total_number+"' required></textarea>";
-            div.innerHTML = inner_elem.trim();
-            step_div.appendChild(div);
-        }
-        function remove_step()
-        {
-            var total_number=document.getElementsByClassName("step");
-            total_number=total_number.length
-            if (total_number!=0){
-                element = document.getElementById('step'+total_number)
-                element.remove();
-            }
-        }
-    </script>
+  }
+
+  function remove(id) {
+    var total_number = document.getElementsByClassName("ingridient");
+    total_number = total_number.length
+    if (total_number != 0) {
+      element = document.getElementById('i_' + total_number)
+      element.remove();
+    }
+  }
+
+  function add_step() {
+    var total_number = document.getElementsByClassName("step");
+    total_number = total_number.length + 1;
+    var step_div = document.getElementById("step_div")
+    var div = document.createElement('div');
+    div.setAttribute("id", 'step' + total_number);
+    div.classList.add('step');
+    div.classList.add('mb-3');
+    inner_elem = "<input type='text' class='form-control mb-1' id='stepname_" + total_number + "' name='stepname_" + total_number + "' placeholder='Nazwa kroku" + total_number + "' required>\
+                <textarea class='form-control' rows='3' placeholder='Krok"+ total_number + "' id='step_" + total_number + "' \
+                name='step_"+ total_number + "' required></textarea>";
+    div.innerHTML = inner_elem.trim();
+    step_div.appendChild(div);
+  }
+  function remove_step() {
+    var total_number = document.getElementsByClassName("step");
+    total_number = total_number.length
+    if (total_number != 0) {
+      element = document.getElementById('step' + total_number)
+      element.remove();
+    }
+  }
+</script>
 {% endblock %}

@@ -21,28 +21,17 @@
     }
 
     .navbar {
-      background-color:#e0afa0;
+      background-color: #e0afa0;
     }
-   
-
-    input[type='search']:focus {
-      border-color: #432818;
-      box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px #432818;
-      outline: 0 none;
-    }
-
-    .btn-outline-light:hover {
-      background-color: #432818;
-      color: white;
-      border-color: #43281899;
-    }
+    
   </style>
   {% endblock %}
 
 </head>
 
 <body class="custombody">
-  <nav class="navbar navbar-expand-lg navbar-dark p-1 mb-4 sticky-top" style="box-shadow: 0px 0px 5px 1px #8a817c; font-size: 20px;">
+  <nav class="navbar navbar-expand-lg navbar-dark p-1 mb-4 sticky-top"
+    style="box-shadow: 0px 0px 5px 1px #8a817c; font-size: 20px;">
     <div class="container w-75">
       <a class="navbar-brand fw-bold" href="/">Wypieczone</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
@@ -68,21 +57,17 @@
             <a class="nav-link" href="/add">Dodaj przepis</a>
           </li>
         </ul>
-        <!-- <form class="d-flex">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-light" type="submit">Search</button>
-        </form> -->
       </div>
     </div>
   </nav>
-  
-    {% block content %} {% endblock %}
+
+  {% block content %} {% endblock %}
 
   <footer class="bg-light text-center w-100 fixed-bottom">
- 
-      <div class="text-center p-2" style="background-color: #fcd5ce; box-shadow: 0px 0px 5px 1px #8a817c;">
-        © 2023 Copyright: Magdalena Ziąber
-      </div>
+
+    <div class="text-center p-2" style="background-color: #fcd5ce; box-shadow: 0px 0px 5px 1px #8a817c;">
+      © 2023 Copyright: Magdalena Ziąber
+    </div>
 
   </footer>
 
