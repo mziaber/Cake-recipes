@@ -98,21 +98,21 @@
 <script>
 
   function add_field() {
-    var total_number = document.getElementsByClassName("ingridient");
+    var total_number = document.getElementsByClassName("ingredient");
     total_number = total_number.length + 1;
     var field_div = document.getElementById("field_div");
     var div = document.createElement('div');
     div.setAttribute("id", 'i_' + total_number);
-    div.classList.add('ingridient')
+    div.classList.add('ingredient')
     div.classList.add('mb-1')
-    inner_elem = "<input type='text' class='form-control' placeholder='Składnik" + total_number + "' id='ingridient" + total_number + "' name='ingridient" + total_number + "' required>"
+    inner_elem = "<input type='text' class='form-control' placeholder='Składnik" + total_number + "' id='ingredient" + total_number + "' name='ingredient" + total_number + "' required>"
     div.innerHTML = inner_elem.trim();
     field_div.appendChild(div);
 
   }
 
   function remove(id) {
-    var total_number = document.getElementsByClassName("ingridient");
+    var total_number = document.getElementsByClassName("ingredient");
     total_number = total_number.length
     if (total_number != 0) {
       element = document.getElementById('i_' + total_number)
